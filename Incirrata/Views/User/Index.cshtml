@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Incirrata.Models.UserViewModel>
+
+@{
+    ViewBag.Title = "Users";
+}
+@section styles {
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+}
+
+<div class="body-content">
+    <div class="container mt-5">
+        <p style="text-align:right">
+            <a href="/Account/Register" class="btn btn-primary btn-sm">Add new <i class="fa fa-plus"></i></a>
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Surname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Role)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedAt)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                    <td>
+                        <a href="/User/Edit/@item.Id"><span class="badge badge-warning">Edit <i class="fa fa-edit"></i></span></a>
+                        <a href="/User/Delete/@item.Id"><span class="badge badge-danger">Delete <i class="fa fa-remove"></i></span></a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

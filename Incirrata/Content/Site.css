@@ -1,0 +1,135 @@
+﻿/* Set padding to keep content from hitting the edges */
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.body-content {
+    flex: 1;
+}
+
+.login-background {
+    background: #36D1DC; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #5B86E5, #36D1DC);
+}
+
+.form-item-strong{
+    margin: auto;
+    margin-right: 10px;
+}
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+footer {
+    text-align: center;
+    color: white;
+}
+
+.navbar {
+    background-color: #2196f3!important;
+}
+
+
+.card-box {
+    background: #FAFAFA;
+    min-height: 300px;
+    position: relative;
+    padding: 30px 30px 20px;
+    margin-bottom: 20px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    position: relative;
+    cursor: pointer;
+}
+
+    .card-box:hover {
+        background: linear-gradient(to right, #1fa2ff17 0%, #12d8fa2b 51%, #1fa2ff36 100%);
+    }
+
+    .card-box:after {
+        display: block;
+        background: #2196F3;
+        border-top: 2px solid #2196F3;
+        content: '';
+        width: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+    }
+.text-infront {
+    color: #2196F3;
+}
+.card-title h2 {
+    margin: 0;
+    padding-top: 5%;
+    color: #2196F3;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-size: 24px;
+    line-height: 1;
+    margin-bottom: 15px;
+}
+
+.card-title p {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.card-link a {
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    color: #FF5722;
+    font-size: 15px;
+}
+
+
+.slidecontainer {
+    width: 100%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+    .slider:hover {
+        opacity: 1;
+    }
+
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: #4CAF50;
+        cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: #4CAF50;
+        cursor: pointer;
+    }

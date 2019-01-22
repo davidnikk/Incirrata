@@ -1,0 +1,68 @@
+﻿@model PagedList.IPagedList<Incirrata.Models.TaskViewModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Tasks";
+}
+@section styles {
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+}
+<div class="body-content">
+    <div class="container mt-3">
+        <p style="text-align:right">
+            @if (!User.IsInRole("Developer"))
+            {
+                <a href="/Task/Create" class="btn btn-primary btn-sm">Add new <i class="fa fa-plus"></i></a>
+            }
+        </p>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-4 py-2">
+                    <div class="card h-100 border-primary">
+                        <div class="card-body">
+                            <h3 class="card-title">@item.Status</h3>
+                            <p class="card-text">@item.Description</p>
+                            <p class="card-text">Project Name: @item.CurrentProject</p>
+                            <p class="card-text">
+                                Assigned To: @if (String.IsNullOrWhiteSpace(item.CurrentDeveloper)) { WriteLiteral("Not Assigned"); }
+                                else
+                                {@item.CurrentDeveloper}
+                            </p>
+                            <p style="color: red">Deadline: @item.Deadline.ToString("dddd, dd MMMM yyyy")</p>
+                            @if (!String.IsNullOrWhiteSpace(item.CurrentDeveloper))
+                            {
+                                <a href="/Task/Edit/@item.Id" class="btn btn-warning btn-sm mb-3">Edit <i class="fa fa-edit"></i></a>
+                            }
+                            @if (String.IsNullOrWhiteSpace(item.CurrentDeveloper) && User.IsInRole("Administrator"))
+                            {
+                                <a href="/Task/Edit/@item.Id" class="btn btn-warning btn-sm mb-3">Edit <i class="fa fa-edit"></i></a>
+                            }
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <a href="/Task/Delete/@item.Id" class="btn btn-danger btn-sm mb-3">Delete <i class="fa fa-remove"></i></a>
+                            }
+                            @if (item.Progress > 0)
+                            {
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: @item.Progress%;" aria-valuenow=@item.Progress aria-valuemin="0" aria-valuemax="100">@item.Progress%</div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="progress">
+                                    0%
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>
+

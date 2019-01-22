@@ -1,0 +1,67 @@
+﻿@model PagedList.IPagedList<Incirrata.Models.ProjectViewModel>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Project";
+}
+@section styles {
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+}
+<div class="body-content">
+
+    <div class="container mt-3">
+        <p style="text-align:right">
+            <a href="/Project/Create" class="btn btn-primary btn-sm">Add new <i class="fa fa-plus"></i></a>
+        </p>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a href="/Project/Edit/@item.Id" class="badge badge-warning">
+                            Edit Project <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="/Project/Delete/@item.Id" class="badge badge-danger">
+                            Remove <i class="fa fa-remove"></i>
+                        </a>
+                    }
+                    <div class="card-box">
+                        <div class="card-title">
+                            <h2>@item.Name</h2>
+                            <p><small class="text-infront">Project code: </small>@item.Code </p>
+                            <p><small class="text-infront">Manager: </small>@item.CurrentProjectManager </p>
+                        </div>
+                        <div class="card-link">
+                            @{
+                                var sum = 0;
+                                var length = item.Tasks.ToArray().Length;
+                                foreach (var progressItem in item.Tasks)
+                                {
+                                    sum += progressItem.Progress;
+                                }
+
+                                if (sum > 0)
+                                {
+                                    var progress = sum / length;
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: @progress%;" aria-valuenow=@progress aria-valuemin="0" aria-valuemax="100">@progress%</div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="progress">0%</div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>

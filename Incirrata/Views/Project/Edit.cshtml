@@ -1,0 +1,85 @@
+﻿@model Incirrata.Models.ProjectViewModel
+
+@{
+    ViewBag.Title = "Edit Project";
+}
+@section styles {
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+}
+
+
+<div class="body-content">
+    <div class="container">
+        <div class="col-md-6 offset-md-3">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal mt-5">
+                    <h3>Create new project</h3>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="col-auto mb-lg-5">
+                        <label for="Name"><strong>Name</strong></label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-list"></i></div>
+                            </div>
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-auto mb-lg-5">
+                        <label for="Code"><strong>Code</strong></label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-gears"></i></div>
+                            </div>
+                            @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                    </div>
+
+                    @if (User.IsInRole("Administrator"))
+                    {
+
+                        <div class="col-auto mb-lg-5">
+                            <label for="ProjectManager"><strong>Project Manager</strong></label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-group"></i></div>
+                                </div>
+                                <select class="form-control" name="project-manager">
+                                    @foreach (var item in Model.ProjectManagers)
+                                    {
+
+                                        <option value="@item.Id" @if (item.Id == Model.CurrentProjectManagerId) { WriteLiteral("selected"); }>@item.Name @item.Surname</option>
+
+                                    }
+                                </select>
+
+                            </div>
+
+                        </div>
+                    }
+
+                    <div class="form-group mb-lg-5">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Update" class="btn btn-secondary" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div>
+            <i class="fa fa-angle-left"></i> @Html.ActionLink("All projects", "Index")
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
